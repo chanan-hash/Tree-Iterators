@@ -1,3 +1,6 @@
+// Authors: Chanan helman
+// chananhelman@gmail.com
+
 #pragma once
 #include <iostream>
 #include <string>

@@ -33,9 +33,13 @@ public:
     ~Node() // destructor will use the iterators to delete all the nodes
     {
         // we know that tree is connected so we can use the BFS to delete all the nodes
-        for (auto &child : children)
+        for (size_t i = 0; i < children.size(); i++)
         {
-            delete[] child;
+            Node<T> *child = children[i];
+            if (child != nullptr)
+            {
+                delete child;
+            }
         }
     }
 

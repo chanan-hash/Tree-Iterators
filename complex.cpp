@@ -1,3 +1,6 @@
+// Authors: Chanan helman
+// chananhelman@gmail.com
+
 #include "complex.hpp"
 
 // initial list of the complex number

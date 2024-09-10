@@ -12,7 +12,7 @@ LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 # Source files
 VALGRIND_FLAGS = -v --leak-check=full --show-leak-kinds=all --error-exitcode=99
 
-TEST_SRC = Tree.hpp TestCounter.cpp complex.cpp test.cpp Node.hpp
+TEST_SRC = Tree.hpp complex.cpp test.cpp Node.hpp # TestCounter.cpp
 
 SRC = main.cpp Tree.hpp complex.cpp Node.hpp
 
@@ -21,8 +21,9 @@ SRC = main.cpp Tree.hpp complex.cpp Node.hpp
 
 tree: $(SRC)
 	$(CXX) $(CXXFLAGS) $(SRC) -o tree $(LDFLAGS)
+	./tree
 
-test: test.o complex.o TestCounter.o
+test: test.o complex.o #TestCounter.o
 	$(CXX) $(CXXFLAGS) $(TEST_SRC) -o test $(LDFLAGS)
 	./test
 

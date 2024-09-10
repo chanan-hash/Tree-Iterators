@@ -39,25 +39,25 @@ public:
     class DFS_iterator;
     // class TreeToHeap;
 
-    Tree() : root(nullptr), size(0) {}                   // constructor with the root value as initial list
-    Tree(T value) : root(new Node<T>(value)), size(1) {} // constructor with the root value as initial list
+    Tree() : root(nullptr), size(0) {} // constructor with the root value as initial list
 
     ~Tree() // destructor will use the iterators to delete all the nodes
     {
         // we know that tree is connected so we can use the BFS to delete all the nodes
-        BFS_iterator it = begin_BFS();
-        BFS_iterator previous = it;
-        BFS_iterator end = end_BFS();
-        while (it != end)
-        {
-            previous = it;
-            ++it;
-            previous->delete_children(); // delete the children of the node, the vector doing it by itself
-        }
-        root = nullptr;
+        //  BFS_iterator it = begin_BFS();
+        //  BFS_iterator previous = it;
+        //  BFS_iterator end = end_BFS();
+        //  while (it != end)
+        //  {
+        //      previous = it;
+        //      ++it;
+        //      previous->delete_children(); // delete the children of the node, the vector doing it by itself
+        //  }
+        //  root = nullptr;
 
-        // delete the root
-        delete[] root;
+        // delete the root, if we won't have the BFS before it will make an error in the destructor
+        delete root;
+        
     }
 
     void add_root(Node<T> *node)
@@ -77,6 +77,7 @@ public:
     {
         if (parent->get_childrens().size() >= K)
         {
+            delete child;
             throw runtime_error("The parent has the maximum number of children");
         }
         parent->add_child(child);
@@ -562,6 +563,9 @@ public:
         sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Tree GUI");
         window.setVerticalSyncEnabled(true); // Attempt to enable vertical sync
 
+        // Create a view for scrolling
+        sf::View view = window.getDefaultView();
+
         while (window.isOpen())
         {
             sf::Event event;
@@ -569,9 +573,19 @@ public:
             {
                 if (event.type == sf::Event::Closed)
                     window.close();
+
+                // Handle mouse wheel scrolling
+                if (event.type == sf::Event::MouseWheelScrolled)
+                {
+                    if (event.mouseWheelScroll.delta > 0)
+                        view.zoom(0.9f); // Zoom in
+                    else
+                        view.zoom(1.1f); // Zoom out
+                }
             }
 
             window.clear(sf::Color::Blue); // Background color
+            window.setView(view);          // Apply the view
             tree.drawTree(window, font);
             window.display();
         }

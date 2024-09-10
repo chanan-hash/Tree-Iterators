@@ -63,6 +63,7 @@ sudo apt-get update
 sudo apt-get install build essential
 ``` 
 allso check that you have `valgrind` installed
+
 ```bash
 sudo apt install valgrind
 ```
@@ -71,6 +72,15 @@ You must have it that the project can run.  You can instaal it by this command:
 ```bash
 sudo apt-get install libsfml-dev
 ```
+***IMPORTANT!***  
+The gui causing a memory leak, somethig that is known, and not part of the code.  
+To see that the code doesn't have a memory leak you can run `valgrind`on the test `valgrind ./test`  
+or to take down from the `main.cpp` the gui by putting each 
+```cpp
+cout << tree << endl;
+```
+in a comment, and run valgrind again.
+
 ### Runing the groject itself
 After you have all the packges
 we can run the project

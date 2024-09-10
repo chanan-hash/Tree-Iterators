@@ -31,6 +31,7 @@ int main()
 {
     Context context;
     context.addFilter("reporters", "counter");
+    // context.addFilter("reporters", "console");
     context.run();
     return return_code;
 }

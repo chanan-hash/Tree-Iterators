@@ -1,6 +1,6 @@
 // Authors: Chanan helman
 // chananhelman@gmail.com
-
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 #include "complex.hpp"
 #include "Tree.hpp"
@@ -25,42 +25,44 @@ TEST_CASE("Testing the complex class")
 
 TEST_CASE("Testing the Node class")
 {
-    Node<int> node1(5);
-    Node<int> node2(6);
+    Node<int>* node1 = new Node<int>(5);
+    Node<int>* node2 = new Node<int>(6);
 
-    CHECK(node1.get_value() == 5);
-    CHECK(node2.get_value() == 6);
+    CHECK(node1->get_value() == 5);
+    CHECK(node2->get_value() == 6);
 
-    node1.add_child(&node2);
+    node1->add_child(node2);
 
-    CHECK(node1.get_childrens().size() == 1);
+    CHECK(node1->get_childrens().size() == 1);
 
-    node1.delete_children();
+    node1->delete_children();
 
-    CHECK(node1.get_childrens().size() == 0);
+    CHECK(node1->get_childrens().size() == 0);
 
-    CHECK(node1.to_string() == "5");
+    CHECK(node1->to_string() == "5");
+    delete node1;
+    delete node2;
 }
 
-// Test for the tree according to the main
-// testing the binary tree with integers
+// // Test for the tree according to the main
+// // testing the binary tree with integers
 
 TEST_CASE("Checking binary INT tree")
 {
     // creating nodes
-    Node<int> node1(5);
-    Node<int> node2(6);
-    Node<int> node3(7);
-    Node<int> node4(8);
-    Node<int> node5(9);
+    Node<int> *node1 = new Node<int>(5);
+    Node<int> *node2 = new Node<int>(6);
+    Node<int> *node3 = new Node<int>(7);
+    Node<int> *node4 = new Node<int>(8);
+    Node<int> *node5 = new Node<int>(9);
 
     // creating the tree
     Tree<int> tree;
-    tree.add_root(&node1);
-    tree.add_sub_node(&node1, &node2);
-    tree.add_sub_node(&node1, &node3);
-    tree.add_sub_node(&node2, &node4);
-    tree.add_sub_node(&node2, &node5);
+    tree.add_root(node1);
+    tree.add_sub_node(node1, node2);
+    tree.add_sub_node(node1, node3);
+    tree.add_sub_node(node2, node4);
+    tree.add_sub_node(node2, node5);
 
     // checking the DFS
     SUBCASE("Checking DFS")
@@ -130,8 +132,8 @@ TEST_CASE("Checking binary INT tree")
 
     SUBCASE("Adding a child to a full parent")
     {
-        Node<int> node6(10);
-        CHECK_THROWS(tree.add_sub_node(&node1, &node6));
+        Node<int> *node6 = new Node<int>(10);
+        CHECK_THROWS(tree.add_sub_node(node1, node6));
     }
 }
 
@@ -160,26 +162,26 @@ TEST_CASE("empty tree")
 // testing the 4-tree with complex numbers
 TEST_CASE("Checking 4-tree with complex numbers")
 {
-    Node<Complex> node_cmpx1(Complex(1, 2));
-    Node<Complex> node_cmpx2(Complex(1, -2));
-    Node<Complex> node_cmpx3(Complex(3, 4));
-    Node<Complex> node_cmpx4(Complex(5, 6));
-    Node<Complex> node_cmpx5(Complex(7, 8));
-    Node<Complex> node_cmpx6(Complex(9, 10));
-    Node<Complex> node_cmpx7(Complex(11, -12));
-    Node<Complex> node_cmpx8(Complex(13, 14));
-    Node<Complex> node_cmpx9(Complex(15, 16));
+    Node<Complex> *node_cmpx1 = new Node<Complex>(Complex(1, 2));
+    Node<Complex> *node_cmpx2 = new Node<Complex>(Complex(1, -2));
+    Node<Complex> *node_cmpx3 = new Node<Complex>(Complex(3, 4));
+    Node<Complex> *node_cmpx4 = new Node<Complex>(Complex(5, 6));
+    Node<Complex> *node_cmpx5 = new Node<Complex>(Complex(7, 8));
+    Node<Complex> *node_cmpx6 = new Node<Complex>(Complex(9, 10));
+    Node<Complex> *node_cmpx7 = new Node<Complex>(Complex(11, -12));
+    Node<Complex> *node_cmpx8 = new Node<Complex>(Complex(13, 14));
+    Node<Complex> *node_cmpx9 = new Node<Complex>(Complex(15, 16));
 
     Tree<Complex, 4> tree_cmpx;
-    tree_cmpx.add_root(&node_cmpx1);
-    tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx2);
-    tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx3);
-    tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx4);
-    tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx5);
-    tree_cmpx.add_sub_node(&node_cmpx2, &node_cmpx6);
-    tree_cmpx.add_sub_node(&node_cmpx2, &node_cmpx7);
-    tree_cmpx.add_sub_node(&node_cmpx2, &node_cmpx8);
-    tree_cmpx.add_sub_node(&node_cmpx2, &node_cmpx9);
+    tree_cmpx.add_root(node_cmpx1);
+    tree_cmpx.add_sub_node(node_cmpx1, node_cmpx2);
+    tree_cmpx.add_sub_node(node_cmpx1, node_cmpx3);
+    tree_cmpx.add_sub_node(node_cmpx1, node_cmpx4);
+    tree_cmpx.add_sub_node(node_cmpx1, node_cmpx5);
+    tree_cmpx.add_sub_node(node_cmpx2, node_cmpx6);
+    tree_cmpx.add_sub_node(node_cmpx2, node_cmpx7);
+    tree_cmpx.add_sub_node(node_cmpx2, node_cmpx8);
+    tree_cmpx.add_sub_node(node_cmpx2, node_cmpx9);
 
     // checking the BFS
     SUBCASE("Checking BFS")
@@ -246,7 +248,7 @@ TEST_CASE("Checking 4-tree with complex numbers")
 
     SUBCASE("Adding a child to a full parent")
     {
-        Node<Complex> node_cmpx10(Complex(17, 18));
-        CHECK_THROWS(tree_cmpx.add_sub_node(&node_cmpx1, &node_cmpx10));
+        Node<Complex> *node_cmpx10 = new Node<Complex>(Complex(17, 18));
+        CHECK_THROWS(tree_cmpx.add_sub_node(node_cmpx1, node_cmpx10));
     }
 }
